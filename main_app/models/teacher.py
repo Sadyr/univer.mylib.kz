@@ -23,6 +23,7 @@ class Teacher(Base):
     gender = relationship('Gender', back_populates="teacher", lazy='subquery')
     position = relationship('Position', back_populates="teacher", lazy='subquery')
     teacher_course = relationship('Teacher_course',back_populates="teacher", lazy='subquery')
+    mark = relationship('Mark',back_populates="teacher", lazy='subquery')
 
 
 

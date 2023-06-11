@@ -21,6 +21,7 @@ class Student(Base):
 
     college_group = relationship('College_group',back_populates="student", lazy='subquery')
     gender = relationship('Gender', back_populates="student", lazy='subquery')
+    mark = relationship('Mark',back_populates="student")
 
 
 

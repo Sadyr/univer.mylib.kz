@@ -19,6 +19,7 @@ class Course(Base):
 
     department = relationship('Department',back_populates="course", lazy='subquery')
     teacher_course = relationship('Teacher_course',back_populates="course")
+    mark = relationship('Mark',back_populates="course")
 
 
 
@@ -84,6 +85,7 @@ class Mark(Base):
     control_point_id=Column(Integer, ForeignKey('control_point.id'))
     semester_id = Column(Integer, ForeignKey('semester.id'))
     mark = Column(Integer, nullable=False)
+    teacher_course_id = Column(Integer, ForeignKey('teacher_course.id'))
 
     student = relationship('Student',back_populates="mark", lazy='subquery')
     college_group = relationship('College_group',back_populates="mark", lazy='subquery')
@@ -91,6 +93,8 @@ class Mark(Base):
     teacher = relationship('Teacher',back_populates="mark", lazy='subquery')
     control_point = relationship('Control_point',back_populates="mark", lazy='subquery')
     semester = relationship('Semester',back_populates="mark", lazy='subquery')
+    teacher_course = relationship('Teacher_course',back_populates="mark", lazy='subquery')
+
 
 
 
@@ -123,8 +127,9 @@ class Semester(Base):
     start_date = Column(String, nullable=False)
     end_date =  Column(String, nullable=False)
 
-    schedule = relationship('Schedule',back_populates="semester", lazy='subquery')
+    schedule = relationship('Schedule',back_populates="semester")
     group_teacher_course =relationship ('Group_teacher_course', back_populates="semester")
+    mark = relationship('Mark',back_populates="semester")
 
 
 class Control_point(Base):
@@ -133,6 +138,9 @@ class Control_point(Base):
     name = Column(String, nullable=False)
     start_date = Column(String, nullable=False)
     end_date =  Column(String, nullable=False)
+
+    mark = relationship('Mark',back_populates="control_point")
+
 
 
 
