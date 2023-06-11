@@ -1,0 +1,77 @@
+{% extends 'base_admin.html' %} {% block content %}
+<div class="container">
+    <h1>Добавить Курс </h1>
+    <h2>Пожалуйста, заполните следующую форму!</h2>
+  
+    <form action="{{ url_for('admin.add_course')}}" method="post" >
+      <div class="form-group">
+        <label for="name">Название</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="Введите название ..."
+        />
+      </div>
+      <div class="form-group">
+        <label for="shortname">Краткое обозначение</label>
+        <input
+          type="text"
+          class="form-control"
+          id="shortname"
+          name="shortname"
+          placeholder="Введите краткое обозначение ..."
+        />
+      </div>
+      <div class="form-group">
+        <label for="credit_hours">Количество кредитов</label>
+        <input
+          type="text"
+          class="form-control"
+          id="credit_hours"
+          name="credit_hours"
+          placeholder=" ..."
+        />
+      </div>
+      <div class="form-group">
+        <label for="theoretical_hours">Теоритические часы</label>
+        <input
+          type="text"
+          class="form-control"
+          id="theoretical_hours"
+          name="theoretical_hours"
+          placeholder=" ..."
+        />
+      </div>
+      <div class="form-group">
+        <label for="experimental_hours">Практические часы</label>
+        <input
+          type="text"
+          class="form-control"
+          id="experimental_hours"
+          name="experimental_hours"
+          placeholder=" ..."
+        />
+      </div>
+      
+        <div class="form-group">
+          <label for="description" class="form-label">Описание</label>
+          <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="department_id">Кафедра </label>
+            <select id="department_id" class="form-control"   name="department_id"
+            >
+            {% for department in departments %}
+              <option value="{{ department.id }}">{{ department.name }} </option>
+                {% endfor %}
+            </select>
+          </div>
+       
+      </div>
+      <button type="submit" class="btn btn-primary">Сохранить</button> 
+    </form>
+
+  {% endblock %}

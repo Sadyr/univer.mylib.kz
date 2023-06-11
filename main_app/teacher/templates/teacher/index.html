@@ -1,0 +1,10 @@
+{% extends 'base_student.html' %}
+
+{% block content %}
+<div class="container">
+
+This is teacher content
+<li class="logout warn"><a onclick="return confirm('Вы действительно хотите выйти?');" href="{{ url_for('auth.logout') }}">Выйти</a></li>
+
+</div>
+{% endblock %}

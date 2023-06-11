@@ -1,0 +1,51 @@
+{% extends 'base_admin.html' %} {% block content %}
+
+
+<div class="container">
+    <h1>Обновить Группу</h1>
+  
+    <form action="{{ url_for('admin.update_group', group_id = group.id)}}" method="post" >
+      <div class="form-group">
+        <label for="name">Название</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="Введите название ..."
+          value="{{ group.name }}"
+
+        />
+      </div>
+      
+      <div class="form-group col-md-4">
+        <label for="grade_id">Курс </label>
+        <select id="grade_id" class="form-control"   name="grade_id"
+        >
+<option selected value="{{ group.grade.id }}">{{ group.grade.name }}</option>
+        {% for grade in grades %}
+          <option value="{{ grade.id }}">{{ grade.name }} </option>
+            {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="speciality_id">Специальность </label>
+        <select id="speciality_id" class="form-control"   name="speciality_id"
+        >
+        <option selected value="{{ group.speciality.id }}">{{ group.speciality.name }}</option>
+
+
+        {% for speciality in specialities %}
+          <option value="{{ speciality.id }}">{{ speciality.name }} </option>
+            {% endfor %}
+        </select>
+      </div>
+
+
+
+       
+      </div>
+      <button type="submit" class="btn btn-primary">Сохранить</button> 
+    </form>
+
+    {% endblock %}

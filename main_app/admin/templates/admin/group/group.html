@@ -1,0 +1,166 @@
+{% extends 'base_admin.html' %}
+ {% block content %}
+
+ <!-- Student Profile -->
+
+ <link
+      rel="stylesheet"
+      href="{{ url_for('admin.static',filename='css/student.css') }}"
+    />
+
+
+
+<div class="student-profile py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+          
+                    <div class="card-body">
+              <p class="mb-0"><strong class="pr-1"> ID - Группы:</strong>{{group.id}}</p>
+              <p class="mb-0"><strong class="pr-1">Название:</strong>{{group.name}}</p>
+              <p> <a href="{{ url_for('admin.update_group', group_id = group.id)}}"
+                ><button type="button" class="btn btn-success">Обновить</button></a></p>
+                
+                <p> <a href="{{ url_for('admin.add_teacher_course_to_group', group_id = group.id)}}"
+                  ><button type="button" class="btn btn-success">Добавить курс</button></a></p>
+
+                <p> <a onclick="return confirm('Вы действительно хотите удалить группу? Напоминаем что данное действие не обратимо');"  href="{{ url_for('admin.delete_group',group_id = group.id)}}"
+                    ><button type="button" class="btn btn-danger">Удалить</button></a></p>
+            
+
+              
+                      <p> <a href="{{ url_for('admin.show_schedule', group_id = group.id, semester_id = 1)}}"
+                        ><button type="button" class="btn btn-success">Показать расписание 1-семестр </button></a></p>  
+                        <p> <a href="{{ url_for('admin.show_schedule', group_id = group.id, semester_id = 2)}}"
+                          ><button type="button" class="btn btn-success">Показать расписание 2-семестр </button></a></p>                  
+                    </div>                
+                  </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Основная информация</h3>
+            </div>
+            <div class="card-body pt-0">
+              <table class="table table-bordered">
+                <tr>
+                    <th width="30%">Название группы</th>
+                    <td width="2%">:</td>
+                    <td>{{group.name}}</td>
+                  </tr>
+                <tr>
+                  <th width="30%">Специальность</th>
+                  <td width="2%">:</td>
+                  <td>{{group.speciality.name}}</td>
+                </tr>
+                <tr>
+                    <th width="30%">Курс</th>
+                    <td width="2%">:</td>
+                    <td>{{group.grade.name}}</td>
+                  </tr>
+                  
+              </table>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="card-header bg-transparent border-0">
+    <br>
+    <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Курсы для данной группы</h3>
+  </div>
+  <div class="card-body pt-0">
+    <table class="table table-bordered">
+      {% for group_teacher_course in group_teachers_courses %}            
+      <tr>
+        <th width="30%">{{ group_teacher_course.teacher_course.course.name }}</th>
+        <td width="2%">:</td>
+        <th width="20%">{{ group_teacher_course.semester.name }}</th>
+        <th width="20%">{{ group_teacher_course.teacher_course.teacher.firstname }}</th>
+        <th width="20%">{{ group_teacher_course.teacher_course.teacher.lastname }}</th>
+
+
+        <td> <p> <a href="{{ url_for('admin.show_course',course_id = group_teacher_course.teacher_course.course.id)}}"
+          ><button type="button" class="btn btn-success">Подробнее</button></a></p></td>
+          <td><p> <a onclick="return confirm('Вы действительно хотите удалить данный курс группы? Напоминаем что данное действие не обратимо');"  href="{{ url_for('admin.delete_group_teacher_course',group_teacher_course_id = group_teacher_course.id, group_id=group.id)}}"
+            ><button type="button" class="btn btn-danger">Удалить</button></a></p></td>
+
+      </tr>               
+      {% endfor %}
+
+    </table>
+  </div>
+
+  
+  <h2>Список студентов группы</h2>
+  <div class="container">
+    <input
+      type="text"
+      id="myInput"
+      onkeyup="myFunction()"
+      placeholder="Поиск  по имени.."
+      title="Введите имя пользователя"
+    />
+   
+  </div>
+  
+  <table id="myTable">
+    <tr class="header">
+      <th style="width: 20%">Имя</th>
+      <th style="width: 20%">Фамилия</th>
+      <th style="width: 20%">email</th>
+    </tr>
+  
+    {% for student in students %}
+  
+    <tr>
+      <td>{{ student.firstname }}</td>
+      <td>{{ student.lastname }}</td>
+      <td>{{ student.email }}</td>
+     
+      <td>
+        <a href="{{ url_for('admin.show_student',student_id = student.id)}}"
+          ><button type="button" class="btn btn-success">Показать</button></a
+        >
+      </td>
+      <td>
+        <a href="{{ url_for('admin.update_student',student_id = student.id)}}"
+          ><button type="button" class="btn btn-primary">Редактировать</button></a
+        >
+      </td>
+  
+    </tr>
+    {% endfor %}
+  </table>
+  
+  <script>
+    function myFunction() {
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+  </script>
+  </div>
+  </main>
+
+{% endblock %}</div>

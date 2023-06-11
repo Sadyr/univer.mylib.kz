@@ -1,0 +1,81 @@
+{% extends 'base_admin.html' %} {% block content %}
+<div class="container">
+    <h1>Обновить информацию о курсе </h1>
+  
+    <form action="{{ url_for('admin.update_course', course_id=course.id)}}" method="post" >
+      <div class="form-group">
+        <label for="name">Название</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          value="{{course.name}}"
+
+        />
+      </div>
+      <div class="form-group">
+        <label for="shortname">Краткое обозначение</label>
+        <input
+          type="text"
+          class="form-control"
+          id="shortname"
+          name="shortname"
+          value="{{course.shortname}}"
+
+        />
+      </div>
+      <div class="form-group">
+        <label for="credit_hours">Количество кредитов</label>
+        <input
+          type="text"
+          class="form-control"
+          id="credit_hours"
+          name="credit_hours"
+          value="{{course.credit_hours}}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="theoretical_hours">Теоритические часы</label>
+        <input
+          type="text"
+          class="form-control"
+          id="theoretical_hours"
+          name="theoretical_hours"
+          value="{{course.theoretical_hours}}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="experimental_hours">Практические часы</label>
+        <input
+          type="text"
+          class="form-control"
+          id="experimental_hours"
+          name="experimental_hours"
+          value="{{course.experimental_hours}}"
+        />
+      </div>
+      
+        <div class="form-group">
+          <label for="description" class="form-label">Описание</label>
+          <textarea class="form-control" id="description" name="description" rows="3">{{course.description}}
+        </textarea>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="department_id">Кафедра </label>
+            <select id="department_id" class="form-control"   name="department_id"
+            >
+            <option selected value="{{ course.department_id }}">{{ course.department.name }} </option>
+
+            {% for department in departments %}
+              <option value="{{ department.id }}">{{ department.name }} </option>
+                {% endfor %}
+            </select>
+          </div>
+       
+      </div>
+      <button type="submit" class="btn btn-primary">Сохранить</button> 
+    </form>
+
+  {% endblock %}

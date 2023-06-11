@@ -1,0 +1,74 @@
+{% extends 'base_admin.html' %} {% block content %}
+
+<h2>Список Преподователей</h2>
+<div class="container">
+  <input
+    type="text"
+    id="myInput"
+    onkeyup="myFunction()"
+    placeholder="Поиск  по имени.."
+    title="Введите имя пользователя"
+  />
+  <a href="{{ url_for('admin.add_teacher')}}">
+  <button type="button" class="btn btn-success">Добавить Преподователя</button> </a>
+</div>
+
+<table id="myTable">
+  <tr class="header">
+    <th style="width: 10%">Имя</th>
+    <th style="width: 10%">Фамилия</th>
+    <th style="width: 10%">email</th>
+    <th style="width: 20%">Кафедра</th>
+    <th style="width: 20%">Позиция</th>
+
+  </tr>
+
+  {% for teacher in teachers %}
+
+  <tr>
+    <td>{{ teacher.firstname }}</td>
+    <td>{{ teacher.lastname }}</td>
+    <td>{{ teacher.email }}</td>
+    <td>{{ teacher.department.name }}</td>
+    <td>{{ teacher.position.name }}</td>
+
+    <td><a onclick="return confirm('Вы действительно хотите удалить преподователя? Напоминаем что данное действие не обратимо');"  href="{{ url_for('admin.delete_teacher', teacher_id=teacher.id)}}"
+      ><button type="button" class="btn btn-danger">Удалить</button></a></td>
+    <td>
+      <a href="{{ url_for('admin.show_teacher', teacher_id=teacher.id)}}"
+        ><button type="button" class="btn btn-success">Показать</button></a
+      >
+    </td>
+    <td>
+      <a href="{{ url_for('admin.update_teacher', teacher_id=teacher.id)}}"
+        ><button type="button" class="btn btn-primary">Редактировать</button></a
+      >
+    </td>
+
+  </tr>
+  {% endfor %}
+</table>
+
+<script>
+  function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+</div>
+</main>
+{% endblock %}

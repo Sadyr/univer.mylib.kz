@@ -1,0 +1,169 @@
+{% extends 'base_admin.html' %} {% block content %}
+
+<p> <a href="{{ url_for('admin.add_schedule_by_group', group_id = group.id, semester_id = semester_id)}}"
+  ><button type="button" class="btn btn-success">Добавить расписание {{ semester_id}} -семестр </button></a></p>  
+
+<h2>Расписание группы {{group.name}}  {{ semester_id}}-семестра </h2>
+
+
+<table id="myTable">
+
+  <h2 >Понедельник </h3>
+
+  <tr class="header">
+    <th style="width: 20%">Курс</th>
+    <th style="width: 20%">Время</th>
+    <th style="width: 20%">Тип урока</th>
+    <th style="width: 20%">Аудитория</th>
+
+    <th style="width: 20%">Преподователь</th>
+  </tr>
+  {% for schedule_item in schedule %}
+  {% if schedule_item.day_of_week.name == "Понедельник" %}
+  <tr>
+    <td>{{ schedule_item.teacher_course.course.name }}</td>
+    <td>{{ schedule_item.lesson_time.name }}</td>
+    <td>{{ schedule_item.lesson_type.name }}</td>
+    <td>{{ schedule_item.room }}</td>
+
+    <td>{{ schedule_item.teacher_course.teacher.firstname  }} {{schedule_item.teacher_course.teacher.lastname}}</td>
+    <td>
+      <a href="{{ url_for('admin.update_schedule',schedule_id=schedule_item.id, group_id=group.id, semester_id=schedule_item.semester_id)}}"
+      ><button type="button" class="btn btn-primary">Редактировать</button></a></td>
+      <td> <a onclick="return confirm('Вы действительно хотите удалить данное занятие? Напоминаем что данное действие не обратимо');"  href="{{ url_for('admin.delete_schedule',group_id = group.id, semester_id=1, schedule_id=schedule_item.id )}}"
+        ><button type="button" class="btn btn-danger">Удалить</button></a></td>
+      
+  </tr>
+  {% endif %}
+{% endfor %}
+</table>
+
+<table id="myTable">
+
+  <h2 >Вторник </h3>
+
+  <tr class="header">
+    <th style="width: 20%">Курс</th>
+    <th style="width: 20%">Время</th>
+    <th style="width: 20%">Тип урока</th>
+    <th style="width: 20%">Аудитория</th>
+
+    <th style="width: 20%">Преподователь</th>
+  </tr>
+  {% for schedule_item in schedule %}
+  {% if schedule_item.day_of_week.name == "Вторник" %}
+  <tr>
+    <td>{{ schedule_item.teacher_course.course.name }}</td>
+    <td>{{ schedule_item.lesson_time.name }}</td>
+    <td>{{ schedule_item.lesson_type.name }}</td>
+    <td>{{ schedule_item.room }}</td>
+
+    <td>{{ schedule_item.teacher_course.teacher.firstname  }} {{schedule_item.teacher_course.teacher.lastname}}</td>
+    <td>
+      <a href="{{ url_for('admin.update_schedule',schedule_id=schedule_item.id, group_id=group.id, semester_id=schedule_item.semester_id)}}"
+      ><button type="button" class="btn btn-primary">Редактировать</button></a></td>
+      <td> <a onclick="return confirm('Вы действительно хотите удалить данное занятие? Напоминаем что данное действие не обратимо');"  href="{{ url_for('admin.delete_schedule',group_id = group.id, semester_id=1, schedule_id=schedule_item.id )}}"
+        ><button type="button" class="btn btn-danger">Удалить</button></a></td>
+  </tr>
+  {% endif %}
+{% endfor %}
+</table>
+
+<table id="myTable">
+
+  <h2 >Среда </h3>
+
+  <tr class="header">
+    <th style="width: 20%">Курс</th>
+    <th style="width: 20%">Время</th>
+    <th style="width: 20%">Тип урока</th>
+    <th style="width: 20%">Аудитория</th>
+
+    <th style="width: 20%">Преподователь</th>
+  </tr>
+  {% for schedule_item in schedule %}
+  {% if schedule_item.day_of_week.name == "Среда" %}
+  <tr>
+    <td>{{ schedule_item.teacher_course.course.name }}</td>
+    <td>{{ schedule_item.lesson_time.name }}</td>
+    <td>{{ schedule_item.lesson_type.name }}</td>
+    <td>{{ schedule_item.room }}</td>
+
+    <td>{{ schedule_item.teacher_course.teacher.firstname  }} {{schedule_item.teacher_course.teacher.lastname}}</td>
+    <td>
+      <a href="{{ url_for('admin.update_schedule',schedule_id=schedule_item.id, group_id=group.id, semester_id=schedule_item.semester_id)}}"
+      ><button type="button" class="btn btn-primary">Редактировать</button></a></td>
+      <td> <a onclick="return confirm('Вы действительно хотите удалить данное занятие? Напоминаем что данное действие не обратимо');"  href="{{ url_for('admin.delete_schedule',group_id = group.id, semester_id=1, schedule_id=schedule_item.id )}}"
+        ><button type="button" class="btn btn-danger">Удалить</button></a></td>
+  </tr>
+  {% endif %}
+{% endfor %}
+</table>
+
+
+
+<table id="myTable">
+
+  <h2 >Четверг </h3>
+
+  <tr class="header">
+    <th style="width: 20%">Курс</th>
+    <th style="width: 20%">Время</th>
+    <th style="width: 20%">Тип урока</th>
+    <th style="width: 20%">Аудитория</th>
+
+    <th style="width: 20%">Преподователь</th>
+  </tr>
+  {% for schedule_item in schedule %}
+  {% if schedule_item.day_of_week.name == "Четверг" %}
+  <tr>
+    <td>{{ schedule_item.teacher_course.course.name }}</td>
+    <td>{{ schedule_item.lesson_time.name }}</td>
+    <td>{{ schedule_item.lesson_type.name }}</td>
+    <td>{{ schedule_item.room }}</td>
+
+    <td>{{ schedule_item.teacher_course.teacher.firstname  }} {{schedule_item.teacher_course.teacher.lastname}}</td>
+    <td>
+      <a href="{{ url_for('admin.update_schedule',schedule_id=schedule_item.id, group_id=group.id, semester_id=schedule_item.semester_id)}}"
+      ><button type="button" class="btn btn-primary">Редактировать</button></a></td>
+      <td> <a onclick="return confirm('Вы действительно хотите удалить данное занятие? Напоминаем что данное действие не обратимо');"  href="{{ url_for('admin.delete_schedule',group_id = group.id, semester_id=1, schedule_id=schedule_item.id )}}"
+        ><button type="button" class="btn btn-danger">Удалить</button></a></td>
+  </tr>
+  {% endif %}
+{% endfor %}
+</table>
+
+<table id="myTable">
+
+  <h2 >Пятница </h3>
+
+  <tr class="header">
+    <th style="width: 20%">Курс</th>
+    <th style="width: 20%">Время</th>
+    <th style="width: 20%">Тип урока</th>
+    <th style="width: 20%">Аудитория</th>
+
+    <th style="width: 20%">Преподователь</th>
+  </tr>
+  {% for schedule_item in schedule %}
+  {% if schedule_item.day_of_week.name == "Пятница" %}
+  <tr>
+    <td>{{ schedule_item.teacher_course.course.name }}</td>
+    <td>{{ schedule_item.lesson_time.name }}</td>
+    <td>{{ schedule_item.lesson_type.name }}</td>
+    <td>{{ schedule_item.room }}</td>
+
+    <td>{{ schedule_item.teacher_course.teacher.firstname  }} {{schedule_item.teacher_course.teacher.lastname}}</td>
+    <td>
+      <a href="{{ url_for('admin.update_schedule',schedule_id=schedule_item.id, group_id=group.id, semester_id=schedule_item.semester_id)}}"
+      ><button type="button" class="btn btn-primary">Редактировать</button></a></td>
+      <td> <a onclick="return confirm('Вы действительно хотите удалить данное занятие? Напоминаем что данное действие не обратимо');"  href="{{ url_for('admin.delete_schedule',group_id = group.id, semester_id=1, schedule_id=schedule_item.id )}}"
+        ><button type="button" class="btn btn-danger">Удалить</button></a></td>
+  </tr>
+  {% endif %}
+{% endfor %}
+</table>
+
+</div>
+</main>
+{% endblock %}

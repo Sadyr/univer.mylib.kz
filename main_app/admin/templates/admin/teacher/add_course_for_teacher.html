@@ -1,0 +1,21 @@
+{% extends 'base_admin.html' %} {% block content %}
+<div class="container">
+  <h1>Добавить курс для Преподователя</h1>
+  <form action="{{ url_for('admin.add_course_for_teacher', teacher_id=teacher.id)}}" method="post" >
+     
+
+    <div class="form-group col-md-4">
+        <label for="course_id">Курс </label>
+        <select id="course_id" class="form-control"   name="course_id"
+        >
+
+        {% for course in courses %}
+          <option value="{{ course.id }}">{{ course.name }} </option>
+            {% endfor %}
+        </select>
+      </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button> 
+  </form>
+</div>
+{% endblock %}

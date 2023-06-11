@@ -1,0 +1,40 @@
+{% extends 'base_admin.html' %}
+
+ {% block content %}
+
+      <div class="row pt-5">
+        <div class="col-12">
+          <h3 class="text-uppercase border-bottom mb-4">{{faculty.name}}</h3>
+        </div>
+            <div class="card-body d-flex flex-column">
+                <h4 class="card-title">Описание</h4>
+                <p class="card-text mb-4">            <p>{{faculty.description}}</p>
+            </p>
+        </div>
+      </div>
+      <div class="row">
+        <!--ADD CLASSES HERE d-flex align-items-stretch-->
+        <div class="col-lg-4 mb-3 d-flex align-items-stretch">
+          <div class="card">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Специальности</h5>
+              <p class="card-text mb-4">Список специальностей  {{faculty.name}}</p>
+              <a href="{{ url_for('admin.specialities',faculty_id = faculty.id)}}" class="btn btn-primary mt-auto align-self-start">Перейти</a>
+            </div>
+          </div>
+        </div>
+        <!--ADD CLASSES HERE d-flex align-items-stretch-->
+        <div class="col-lg-4 mb-3 d-flex align-items-stretch">
+          <div class="card">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">Кафедры</h5>
+              <p class="card-text mb-4">Список кафедр  {{faculty.name}}</p>
+              <a href="{{ url_for('admin.departments',faculty_id = faculty.id)}}" class="btn btn-primary mt-auto align-self-start">Перейти</a>
+            </div>
+          </div>
+        </div>
+        <!--ADD CLASSES HERE d-flex align-items-stretch-->
+      
+      </div>
+
+  {% endblock %}</div>

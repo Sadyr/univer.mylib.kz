@@ -1,0 +1,33 @@
+{% extends 'base_admin.html' %} {% block content %}
+<div class="container">
+    <h1>Добавить Курс для группы {{group.name}} </h1>
+    <h2>Пожалуйста, выберите курс!</h2>
+  
+    <form action="#" method="post" >
+
+
+        <div class="form-group col-md-4">
+            <label for="semester_id">Курс - Преподователь </label>
+            <select id="semester_id" class="form-control"   name="semester_id"
+            >
+            {% for semester in semesters %}
+              <option value="{{ semester.id }}">{{ semester.name }} </option>
+                {% endfor %}
+            </select>
+          </div>
+
+        <div class="form-group col-md-4">
+            <label for="teacher_course_id">Курс - Преподователь </label>
+            <select id="teacher_course_id" class="form-control"   name="teacher_course_id"
+            >
+            {% for teacher_course in teachers_courses %}
+              <option value="{{ teacher_course.id }}">{{ teacher_course.course.name }} -  {{ teacher_course.teacher.firstname }} {{ teacher_course.teacher.lastname }} </option>
+                {% endfor %}
+            </select>
+          </div>
+       
+      </div>
+      <button type="submit" class="btn btn-primary">Сохранить</button> 
+    </form>
+
+  {% endblock %}

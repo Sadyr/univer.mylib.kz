@@ -1,0 +1,68 @@
+{% block header %}
+<header role="banner">
+    <h1>Консоль управления</h1>
+    <ul class="utilities">
+      <br>
+      <li class="users"><a href="#">{{ g.user['firstname'] }}</a></li>
+      <li class="logout warn"><a onclick="return confirm('Вы действительно хотите выйти?');" href="{{ url_for('auth.logout') }}">Выйти</a></li>
+    </ul>
+  </header>
+  
+  <nav role='navigation'>
+    <ul class="main">
+      <li class="dashboard"><a href="{{ url_for('admin.index') }}">Dashboard</a></li>
+      <li class="users"><a href="{{ url_for('admin.teachers') }}">Преподователи</a></li>
+      <li class="users"><a href="{{ url_for('admin.students') }}">Студенты</a></li>
+      <li class="edit"><a href="{{ url_for('admin.faculties') }}">Факультеты</a></li>
+      <li class="edit"><a href="{{ url_for('admin.groups')}}">Группы</a></li>
+      <li class="edit"><a href="{{ url_for('admin.courses')}}">Курсы</a></li>
+
+
+     
+
+    </ul>
+  </nav>
+  
+  <main role="main">
+    <div class="container">
+    
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      
+      #myInput {
+        background-image: url('/css/searchicon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+      }
+      
+      #myTable {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd;
+        font-size: 18px;
+      }
+      
+      #myTable th, #myTable td {
+        text-align: left;
+        padding: 12px;
+      }
+      
+      #myTable tr {
+        border-bottom: 1px solid #ddd;
+      }
+      
+      #myTable tr.header, #myTable tr:hover {
+        background-color: #f1f1f1;
+      }
+      </style>
+      </head>
+
+  
+{% endblock %}

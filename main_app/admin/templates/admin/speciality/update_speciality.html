@@ -1,0 +1,51 @@
+{% extends 'base_admin.html' %} {% block content %}
+<div class="container">
+    <h1>Обновить Специальность в {{ faculty.name }}</h1>
+  
+    <form action="{{ url_for('admin.update_speciality', faculty_id = faculty.id, speciality_id = speciality.id)}}" method="post" >
+      <div class="form-group">
+        <label for="name">Название</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="Введите название ..."
+          value="{{  speciality.name }}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="name">Код</label>
+        <input
+          type="text"
+          class="form-control"
+          id="code"
+          name="code"
+          placeholder="Введите код ..."
+          value="{{  speciality.code }}"
+
+        />
+      </div>
+      
+        <div class="form-group">
+          <label for="description" class="form-label">Описание</label>
+          <textarea class="form-control" id="description" name="description" rows="3"> {{  speciality.description }}
+        </textarea>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label for="curriculum_id">Направление </label>
+            <select id="curriculum_id" class="form-control"   name="curriculum_id"
+            >
+            <option value="{{  speciality.curriculum_id }}">{{  speciality.curriculum.name }}</option>
+            {% for curriculum in curriculums %}
+              <option value="{{ curriculum.id }}">{{ curriculum.name }} </option>
+                {% endfor %}
+            </select>
+          </div>
+       
+      </div>
+      <button type="submit" class="btn btn-primary">Сохранить</button> 
+    </form>
+
+  {% endblock %}

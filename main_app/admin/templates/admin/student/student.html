@@ -1,0 +1,119 @@
+{% extends 'base_admin.html' %}
+ {% block content %}
+
+ <!-- Student Profile -->
+
+ <link
+      rel="stylesheet"
+      href="{{ url_for('admin.static',filename='css/student.css') }}"
+    />
+<div class="student-profile py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent text-center">
+              <img class="profile_img" src="https://placeimg.com/640/480/arch/any" alt="">
+              <h3> {{student.firstname}} {{student.lastname}}</h3>
+            </div>
+            <div class="card-body">
+              <p class="mb-0"><strong class="pr-1"> ID - Студента:</strong>{{student.id}}</p>
+              <p class="mb-0"><strong class="pr-1">Группа:</strong>{{student.college_group.name}}</p>
+              <p> <a href="{{ url_for('admin.update_student',student_id = student.id)}}"
+                ><button type="button" class="btn btn-success">Обновить</button></a></p>
+                <p> <a onclick="return confirm('Вы действительно хотите удалить студента? Напоминаем что данное действие не обратимо');"  href="{{ url_for('admin.delete_student',student_id = student.id)}}"
+                    ><button type="button" class="btn btn-danger">Удалить</button></a></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card shadow-sm">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Основная информация</h3>
+            </div>
+            <div class="card-body pt-0">
+              <table class="table table-bordered">
+                <tr>
+                  <th width="30%">Имя</th>
+                  <td width="2%">:</td>
+                  <td>{{student.firstname}}</td>
+                </tr>
+                <tr>
+                    <th width="30%">Фамилия</th>
+                    <td width="2%">:</td>
+                    <td>{{student.lastname}}</td>
+                  </tr>
+                  <tr>
+                    <th width="30%">Отчество</th>
+                    <td width="2%">:</td>
+                    <td>{{student.middlename}}</td>
+                  </tr>
+                  <tr>
+                    <th width="30%">Дата рождение</th>
+                    <td width="2%">:</td>
+                    <td>{{student.birthday}}</td>
+                  </tr>
+                  <tr>
+                    <th width="30%">Пол</th>
+                    <td width="2%">:</td>
+                    <td>{{student.gender.name}}</td>
+                  </tr>
+                  <tr>
+                    <th width="30%">Email</th>
+                    <td width="2%">:</td>
+                    <td>{{student.email}}</td>
+                  </tr>
+                  <tr>
+                    <th width="30%">Телефон</th>
+                    <td width="2%">:</td>
+                    <td>{{student.phone}}</td>
+                  </tr>
+                  <tr>
+                    <th width="30%">Пароль</th>
+                    <td width="2%">:</td>
+                    <td>{{student.password}}</td>
+                  </tr>
+              </table>
+            </div>
+
+            <div class="card-header bg-transparent border-0">
+                <h3 class="mb-0"><i class="far fa-clone pr-1"></i>Академическая информация</h3>
+              </div>
+              <div class="card-body pt-0">
+                <table class="table table-bordered">
+                  <tr>
+                    <th width="30%">Группа</th>
+                    <td width="2%">:</td>
+                    <td>{{student.college_group.name}}</td>
+                  </tr>
+                  <tr>
+                    <th width="30%">Курс</th>
+                    <td width="2%">:</td>
+                    <td>{{student.college_group.grade.name}}</td>
+                  </tr>
+                  <tr>
+                    <th width="30%">Академическая программа</th>
+                    <td width="2%">:</td>
+                    <td>{{student.college_group.speciality.curriculum.name}}</td>
+                  </tr>
+                  <tr>
+                    <th width="30%">Факультет</th>
+                    <td width="2%">:</td>
+                    <td>{{student.college_group.speciality.faculty.name}}</td>
+                  </tr>
+                  <tr>
+                    <th width="30%">Специальность</th>
+                    <td width="2%">:</td>
+                    <td>{{student.college_group.speciality.name}}</td>
+                  </tr>
+                
+                   
+                </table>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+{% endblock %}</div>

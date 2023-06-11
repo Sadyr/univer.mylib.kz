@@ -1,0 +1,126 @@
+{% extends 'base_admin.html' %} {% block content %}
+
+
+<h2>Расписание преподователя {{teacher.firstname}}  {{teacher.lastname}} {{ semester_id}}-семестра </h2>
+
+
+<table id="myTable">
+  <h2 >Понедельник </h3>
+  <tr class="header">
+    <th style="width: 20%">Курс</th>
+    <th style="width: 20%">Время</th>
+    <th style="width: 20%">Тип урока</th>
+    <th style="width: 20%">Аудитория</th>
+    <th style="width: 20%">Группа</th>
+  </tr>
+  {% for schedule_item in schedule %}
+  {% if schedule_item.day_of_week.name == "Понедельник" %}
+  <tr>
+    <td>{{ schedule_item.teacher_course.course.name }}</td>
+    <td>{{ schedule_item.lesson_time.name }}</td>
+    <td>{{ schedule_item.lesson_type.name }}</td>
+    <td>{{ schedule_item.room }}</td>
+    <td>{{ schedule_item.college_group.name }}</td>
+  </tr>
+  {% endif %}
+{% endfor %}
+</table>
+
+<table id="myTable">
+    <h2 >Вторник </h3>
+    <tr class="header">
+      <th style="width: 20%">Курс</th>
+      <th style="width: 20%">Время</th>
+      <th style="width: 20%">Тип урока</th>
+      <th style="width: 20%">Аудитория</th>
+      <th style="width: 20%">Группа</th>
+    </tr>
+    {% for schedule_item in schedule %}
+    {% if schedule_item.day_of_week.name == "Вторник" %}
+    <tr>
+      <td>{{ schedule_item.teacher_course.course.name }}</td>
+      <td>{{ schedule_item.lesson_time.name }}</td>
+      <td>{{ schedule_item.lesson_type.name }}</td>
+      <td>{{ schedule_item.room }}</td>
+      <td>{{ schedule_item.college_group.name }}</td>
+    </tr>
+    {% endif %}
+  {% endfor %}
+  </table>
+
+  <table id="myTable">
+    <h2 >Среда </h3>
+    <tr class="header">
+      <th style="width: 20%">Курс</th>
+      <th style="width: 20%">Время</th>
+      <th style="width: 20%">Тип урока</th>
+      <th style="width: 20%">Аудитория</th>
+      <th style="width: 20%">Группа</th>
+    </tr>
+    {% for schedule_item in schedule %}
+    {% if schedule_item.day_of_week.name == "Среда" %}
+    <tr>
+      <td>{{ schedule_item.teacher_course.course.name }}</td>
+      <td>{{ schedule_item.lesson_time.name }}</td>
+      <td>{{ schedule_item.lesson_type.name }}</td>
+      <td>{{ schedule_item.room }}</td>
+      <td>{{ schedule_item.college_group.name }}</td>
+    </tr>
+    {% endif %}
+  {% endfor %}
+  </table>
+
+  <table id="myTable">
+    <h2 >Четверг </h3>
+    <tr class="header">
+      <th style="width: 20%">Курс</th>
+      <th style="width: 20%">Время</th>
+      <th style="width: 20%">Тип урока</th>
+      <th style="width: 20%">Аудитория</th>
+      <th style="width: 20%">Группа</th>
+    </tr>
+    {% for schedule_item in schedule %}
+    {% if schedule_item.day_of_week.name == "Четверг" %}
+    <tr>
+      <td>{{ schedule_item.teacher_course.course.name }}</td>
+      <td>{{ schedule_item.lesson_time.name }}</td>
+      <td>{{ schedule_item.lesson_type.name }}</td>
+      <td>{{ schedule_item.room }}</td>
+      <td>{{ schedule_item.college_group.name }}</td>
+    </tr>
+    {% endif %}
+  {% endfor %}
+  </table>
+
+  <table id="myTable">
+    <h2 >Пятница </h3>
+    <tr class="header">
+      <th style="width: 20%">Курс</th>
+      <th style="width: 20%">Время</th>
+      <th style="width: 20%">Тип урока</th>
+      <th style="width: 20%">Аудитория</th>
+      <th style="width: 20%">Группа</th>
+    </tr>
+    {% for schedule_item in schedule %}
+    {% if schedule_item.day_of_week.name == "Пятница" %}
+    <tr>
+      <td>{{ schedule_item.teacher_course.course.name }}</td>
+      <td>{{ schedule_item.lesson_time.name }}</td>
+      <td>{{ schedule_item.lesson_type.name }}</td>
+      <td>{{ schedule_item.room }}</td>
+      <td>{{ schedule_item.college_group.name }}</td>
+    </tr>
+    {% endif %}
+  {% endfor %}
+  </table>
+
+
+
+
+
+
+
+
+</div>
+</main>
+{% endblock %}

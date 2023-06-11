@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Add a New Person {% endblock %}</h1>
+    <form method="post">
+        <p>
+            <label for="firstname">firstname</label>
+            <input type="text" name="firstname"
+                   placeholder="firstname">
+            </input>
+        </p>
+        <p>
+            <label for="lastname">lastname</label>
+            <input type="text" name="lastname"
+                   placeholder="lastname">
+            </input>
+        </p>
+        <p>
+            <label for="midlename">midlename</label>
+            <input type="text" name="midlename"
+                   placeholder="midlename">
+            </input>
+        </p>
+        <p>
+            <label for="birthday">birthday</label>
+            <input type="text" name="birthday"
+                   placeholder="birthday">
+            </input>
+        </p>
+        <p>
+            <label for="gender_id">gender_id</label>
+            <input type="text" name="gender_id"
+                   placeholder="gender_id">
+            </input>
+        </p>
+        <p>
+            <label for="email">email</label>
+            <input type="text" name="email"
+                   placeholder="email">
+            </input>
+        </p>
+        <p>
+            <label for="password">password</label>
+            <input type="text" name="password"
+                   placeholder="password">
+            </input>
+        </p>
+
+        <p>
+            <label for="phone_number">phone_number</label>
+            <input type="text" name="phone_number"
+                   placeholder="phone_number">
+            </input>
+        </p>
+        <p>
+            <label for="person_group_id">person_group_id</label>
+            <input type="text" name="person_group_id"
+                   placeholder="person_group_id">
+            </input>
+        </p>
+      
+        <p>
+            <button type="submit">Submit</button>
+        </p>
+    </form>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base_admin.html' %} {% block content %}
+<div class="container">
+  <h1>Добавление занятия  </h1>
+    <form action="#" method="post" >
+
+
+    <div class="form-group col-md-4">
+        <label for="teacher_course_id">Курс </label>
+        <select id="teacher_course_id" class="form-control"   name="teacher_course_id"
+        >
+        {% for teacher_course in teachers_courses %}
+          <option value="{{ teacher_course.teacher_course.id }}">{{ teacher_course.teacher_course.course.name }} - 
+            {{ teacher_course.teacher_course.teacher.firstname }}             {{ teacher_course.teacher_course.teacher.lastname }} 
+          </option>
+
+            {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="day_of_week_id">День недели </label>
+        <select id="day_of_week_id" class="form-control"   name="day_of_week_id"
+        >
+        {% for day in day_of_week %}
+          <option value="{{ day.id }}">{{ day.name }} </option>
+            {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="lesson_time_id">Время </label>
+        <select id="lesson_time_id" class="form-control"   name="lesson_time_id"
+        >
+        {% for time in lesson_time %}
+          <option value="{{ time.id }}">{{ time.name }} </option>
+            {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="lesson_type_id">Тип урока </label>
+        <select id="lesson_type_id" class="form-control"   name="lesson_type_id"
+        >
+        {% for type in lesson_type %}
+          <option value="{{ type.id }}">{{ type.name }} </option>
+            {% endfor %}
+        </select>
+      </div>
+
+        <div class="form-group">
+          <label for="room">Аудитория</label>
+          <input
+            type="text"
+            class="form-control"
+            id="room"
+            name="room"/>
+        </div>
+
+      <button type="submit" class="btn btn-primary">Сохранить</button> 
+    </form>
+</div>
+
+  {% endblock %}

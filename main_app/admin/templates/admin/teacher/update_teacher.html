@@ -1,0 +1,140 @@
+{% extends 'base_admin.html' %} {% block content %}
+<div class="container">
+  <h1>Обновить данные  Преподователя</h1>
+  <form action="{{ url_for('admin.update_teacher', teacher_id=teacher.id)}}" method="post" >
+    <div class="form-group">
+      <label for="firstname">Имя</label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstname"
+        name="firstname"
+        value="{{teacher.firstname}}"
+
+        placeholder="Введите имя ..."
+      />
+    </div>
+    <div class="form-group">
+      <label for="lastname">Фамилия</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastname"
+        placeholder="Введите фамилию ..."
+        name="lastname"
+        value="{{teacher.lastname}}"
+
+
+      />
+    </div>
+    <div class="form-group">
+        <label for="middlename">Отчество</label>
+        <input
+          type="text"
+          class="form-control"
+          id="middlename"
+          placeholder="Введите отчество ..."
+          name="middlename"
+          value="{{teacher.middlename}}"
+
+
+        />
+      </div>
+    
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="birthday">Дата рождения</label>
+              <input
+                type="date"
+                class="form-control"
+                id="birthday"
+                name="birthday"
+                value="{{teacher.birthday}}"
+
+              />
+
+
+      </div>
+      <div class="form-group">
+        <label for="bio" class="form-label">Био</label>
+        <textarea class="form-control" id="bio" name="bio" rows="3"  
+        >{{teacher.bio}}</textarea>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="gender">Пол</label>
+        <select id="gender" class="form-control" name="gender_id" >
+            <option selected value="{{teacher.gender_id}}">{{teacher.gender.name}}</option>
+          <option value="1" selected>Муж</option>
+          <option value="2">Жен</option>
+        </select>
+      </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          placeholder="Email ..."
+          name="email"
+          value="{{teacher.email}}"
+
+        />
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="phone">Телефон</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="phone"
+                placeholder="Телефон"
+                name="phone"
+                value="{{teacher.phone}}"
+
+
+              />
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPassword4">Пароль</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          placeholder="Пароль"
+          name="password"
+          value="{{teacher.password}}"
+
+
+        />
+      </div>
+      <div class="form-group col-md-4">
+        <label for="department_id">Кафедра </label>
+        <select id="department_id" class="form-control"   name="department_id"
+        ><option selected value="{{teacher.department.id}}">{{teacher.department.name}}</option>
+
+        {% for department in departments %}
+          <option value="{{ department.id }}">{{ department.name }} </option>
+            {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="position_id">Позиция </label>
+        <select id="position_id" class="form-control"   name="position_id"
+        >
+        <option selected value="{{teacher.position.id}}">{{teacher.position.name}}</option>
+
+        {% for position in positions %}
+          <option value="{{ position.id }}">{{ position.name }} </option>
+            {% endfor %}
+        </select>
+      </div>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Сохранить</button> 
+  </form>
+</div>
+{% endblock %}

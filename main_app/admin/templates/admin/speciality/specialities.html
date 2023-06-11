@@ -1,0 +1,41 @@
+{% extends 'base_admin.html' %}
+
+ {% block content %}
+ <h2> {{ faculty.name }} : Специальности</h2><br>
+<a href="{{ url_for('admin.add_speciality', faculty_id=faculty.id)}}">
+  <button type="button" class="btn btn-success">Добавить Специальность</button> </a>
+
+<table id="myTable">
+  <tr class="header">
+    <th style="width: 5%">ID</th>
+    <th style="width: 20%">Название</th>
+    <th style="width: 20%">Код</th>
+    <th style="width: 20%">Академическая программа</th>
+  </tr>
+
+  {% for speciality in specialities %}
+
+  <tr>
+    <td>{{ speciality.id }}</td>
+    <td>{{ speciality.name }}</td>
+    <td>{{ speciality.code }}</td>
+    <td>{{ speciality.curriculum.name }}</td>
+    <td><a onclick="return confirm('Вы действительно хотите удалить специальность? Напоминаем что данное действие не обратимо');"  href="{{ url_for('admin.delete_speciality',speciality_id = speciality.id, faculty_id = faculty.id) }}"
+      ><button type="button" class="btn btn-danger">Удалить</button></a></td>
+     
+      <td>
+        <a href="{{ url_for('admin.show_speciality',speciality_id = speciality.id)}}"
+          ><button type="button" class="btn btn-success">Показать</button></a
+        >
+      </td>
+      <td>
+      <a href="{{ url_for('admin.update_speciality',speciality_id = speciality.id, faculty_id = faculty.id)}}"
+        ><button type="button" class="btn btn-primary">Редактировать</button></a
+      >
+    </td>
+
+  </tr>
+  {% endfor %}
+</table>
+
+    {% endblock %}</div>
