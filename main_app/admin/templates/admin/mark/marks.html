@@ -1,0 +1,65 @@
+{% extends 'base_admin.html' %} {% block content %}
+
+<div class="container">
+<h2>Журнал оценок по занятиям и контрольным точкам студента {{student.firstname}} {{student.lastname}}</h2>
+
+    <h1>1-Семестр</h1>
+    {% for group_teacher_course in group_teachers_courses %}
+    {% if  group_teacher_course.semester.id == 1 %}
+
+
+  <table id="myTable">
+    <tr class="header">
+      <th style="width: 20%">Курс</th>
+      <th style="width: 20%">Преподователь</th>
+      <th style="width: 20%">Семестр</th>
+    </tr>
+  
+  
+    <tr>
+      <td>{{  group_teacher_course.teacher_course.course.name }}</td>
+      <td>{{ group_teacher_course.teacher_course.teacher.firstname }} {{ group_teacher_course.teacher_course.teacher.lastname }}</td>
+      <td>{{  group_teacher_course.semester.name}}</td>
+      <td>
+        <a href="{{ url_for('admin.add_mark',student_id = student.id, group_id=group_id, 
+         semester_id=group_teacher_course.semester.id,course_id=group_teacher_course.teacher_course.course.id, teacher_course_id=group_teacher_course.teacher_course.id,teacher_id=group_teacher_course.teacher_course.teacher.id)}}"
+          ><button type="button" class="btn btn-success">Поставить итоговую оценку</button></a
+        >
+      </td>
+    </tr>
+  </table>
+  {% for mark in marks %}
+  {% if  mark.semester.id == group_teacher_course.semester.id  and mark.course_id == group_teacher_course.teacher_course.course.id %}
+  {% endif %}
+
+  {{mark.mark}}
+  {% endfor %}
+
+
+  {% endif %}
+  {% endfor %}
+  <h1>2-Семестр</h1>
+  {% for group_teacher_course in group_teachers_courses %}
+  {% if  group_teacher_course.semester.id == 2 %}
+
+
+<table id="myTable">
+  <tr class="header">
+    <th style="width: 20%">Курс</th>
+    <th style="width: 20%">Преподователь</th>
+    <th style="width: 20%">Семестр</th>
+  </tr>
+
+
+  <tr>
+    <td>{{  group_teacher_course.teacher_course.course.name }}</td>
+    <td>{{ group_teacher_course.teacher_course.teacher.firstname }} {{ group_teacher_course.teacher_course.teacher.lastname }}</td>
+    <td>{{  group_teacher_course.semester.name}}</td>  
+  </tr>
+</table>
+{% endif %}
+{% endfor %}
+
+</div>
+</main>
+{% endblock %}

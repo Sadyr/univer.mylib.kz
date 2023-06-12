@@ -131,8 +131,8 @@
         >
       </td>
       <td>
-        <a href="{{ url_for('admin.update_student',student_id = student.id)}}"
-          ><button type="button" class="btn btn-primary">Редактировать</button></a
+        <a href="{{ url_for('admin.show_marks',student_id = student.id, group_id=group.id)}}"
+          ><button type="button" class="btn btn-primary">Журнал</button></a
         >
       </td>
   
