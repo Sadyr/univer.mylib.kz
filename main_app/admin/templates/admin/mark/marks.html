@@ -28,13 +28,48 @@
       </td>
     </tr>
   </table>
-  {% for mark in marks %}
-  {% if  mark.semester.id == group_teacher_course.semester.id  and mark.course_id == group_teacher_course.teacher_course.course.id %}
-  {% endif %}
 
-  {{mark.mark}}
-  {% endfor %}
 
+  <table id="myTable">
+    <tr class="header">
+      <th style="width: 20%">Тип контроля</th>
+      <th style="width: 20%">Оценка в баллах</th>
+    </tr>
+    {% for mark in marks %}
+    {% if  mark.semester.id == group_teacher_course.semester.id  and mark.course_id == group_teacher_course.teacher_course.course.id %}
+
+  
+    <tr>
+        {% if  mark.control_point.name== "1-рубежный контроль" %}
+      <td>1-рубежный контроль</td> 
+      <td> {{mark.mark}}</td>
+      {% endif %}
+      {% if  mark.control_point.name== "2-рубежный контроль" %}
+      <td>2-рубежный контроль</td> 
+      <td> {{mark.mark}}</td>
+      {% endif %}
+      {% if  mark.control_point.name== "Экзамен" %}
+      <td>Экзамен</td> 
+      <td> {{mark.mark}}</td>
+      {% endif %}
+      <td><p> <a onclick="return confirm('Вы действительно хотите удалить данный курс оценку? Напоминаем что данное действие не обратимо');" 
+         href="{{ url_for('admin.delete_mark', group_id=group_id, student_id=student.id, mark_id=mark.id)}}"
+        ><button type="button" class="btn btn-danger">Удалить</button></a></p></td>
+        <td>
+            <a href="{{ url_for('admin.update_mark', group_id=group_id, student_id=student.id, mark_id=mark.id)}}"
+              ><button type="button" class="btn btn-success">Редактировать</button></a
+            >
+          </td>
+   
+    </tr>
+
+    {% endif %}
+
+    {% endfor %}
+  </table>
+
+
+ 
 
   {% endif %}
   {% endfor %}
@@ -54,9 +89,55 @@
   <tr>
     <td>{{  group_teacher_course.teacher_course.course.name }}</td>
     <td>{{ group_teacher_course.teacher_course.teacher.firstname }} {{ group_teacher_course.teacher_course.teacher.lastname }}</td>
-    <td>{{  group_teacher_course.semester.name}}</td>  
+    <td>{{  group_teacher_course.semester.name}}</td> 
+    <td>
+        <a href="{{ url_for('admin.add_mark',student_id = student.id, group_id=group_id, 
+         semester_id=group_teacher_course.semester.id,course_id=group_teacher_course.teacher_course.course.id, teacher_course_id=group_teacher_course.teacher_course.id,teacher_id=group_teacher_course.teacher_course.teacher.id)}}"
+          ><button type="button" class="btn btn-success">Поставить итоговую оценку</button></a
+        >
+      </td>
+     
   </tr>
 </table>
+<table id="myTable">
+    <tr class="header">
+      <th style="width: 20%">Тип контроля</th>
+      <th style="width: 20%">Оценка в баллах</th>
+    </tr>
+    {% for mark in marks %}
+    {% if  mark.semester.id == group_teacher_course.semester.id  and mark.course_id == group_teacher_course.teacher_course.course.id %}
+
+  
+    <tr>
+        {% if  mark.control_point.name== "1-рубежный контроль" %}
+      <td>1-рубежный контроль</td> 
+      <td> {{mark.mark}}</td>
+      {% endif %}
+      {% if  mark.control_point.name== "2-рубежный контроль" %}
+      <td>2-рубежный контроль</td> 
+      <td> {{mark.mark}}</td>
+      {% endif %}
+      {% if  mark.control_point.name== "Экзамен" %}
+      <td>Экзамен</td> 
+      <td> {{mark.mark}}</td>
+      {% endif %}
+      <td><p> <a onclick="return confirm('Вы действительно хотите удалить данный курс оценку? Напоминаем что данное действие не обратимо');" 
+         href="{{ url_for('admin.delete_mark', group_id=group_id, student_id=student.id, mark_id=mark.id)}}"
+        ><button type="button" class="btn btn-danger">Удалить</button></a></p></td>
+        <td>
+            <a href="{{ url_for('admin.update_mark', group_id=group_id, student_id=student.id, mark_id=mark.id)}}"
+              ><button type="button" class="btn btn-success">Редактировать</button></a
+            >
+          </td>
+   
+    </tr>
+
+    {% endif %}
+
+    {% endfor %}
+  </table>
+
+
 {% endif %}
 {% endfor %}
 
