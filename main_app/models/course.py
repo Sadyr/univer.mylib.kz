@@ -20,6 +20,7 @@ class Course(Base):
     department = relationship('Department',back_populates="course", lazy='subquery')
     teacher_course = relationship('Teacher_course',back_populates="course")
     mark = relationship('Mark',back_populates="course")
+    rate = relationship('Rate',back_populates="course")
 
 
 
@@ -93,7 +94,31 @@ class Mark(Base):
     teacher = relationship('Teacher',back_populates="mark", lazy='subquery')
     control_point = relationship('Control_point',back_populates="mark", lazy='subquery')
     semester = relationship('Semester',back_populates="mark", lazy='subquery')
-    teacher_course = relationship('Teacher_course',back_populates="mark", lazy='subquery')
+    teacher_course = relationship('Teacher_course',back_populates="mark")
+
+class Rate(Base):
+    __tablename__ = 'rate'
+    id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
+    student_id = Column(Integer, ForeignKey('student.id'))
+    college_group_id = Column(Integer, ForeignKey('college_group.id'))
+    course_id = Column(Integer, ForeignKey('course.id'))
+    teacher_id = Column(Integer, ForeignKey('teacher.id'))
+    semester_id = Column(Integer, ForeignKey('semester.id'))
+    lesson_type_id = Column(Integer, ForeignKey('lesson_type.id'))
+    datetime=Column(String, nullable=False)
+    subject=Column(Integer, nullable=True)
+    rate = Column(Integer, nullable=False)
+
+
+
+    student = relationship('Student',back_populates="rate", lazy='subquery')
+    college_group = relationship('College_group',back_populates="rate", lazy='subquery')
+    course = relationship('Course',back_populates="rate", lazy='subquery')
+    teacher = relationship('Teacher',back_populates="rate", lazy='subquery')
+    semester = relationship('Semester',back_populates="rate", lazy='subquery')
+    lesson_type = relationship('Lesson_type',back_populates="rate", lazy='subquery')
+
+
 
 
 
@@ -130,6 +155,8 @@ class Semester(Base):
     schedule = relationship('Schedule',back_populates="semester")
     group_teacher_course =relationship ('Group_teacher_course', back_populates="semester")
     mark = relationship('Mark',back_populates="semester")
+    rate = relationship('Rate',back_populates="semester")
+
 
 
 class Control_point(Base):
@@ -140,6 +167,7 @@ class Control_point(Base):
     end_date =  Column(String, nullable=False)
 
     mark = relationship('Mark',back_populates="control_point")
+
 
 
 
@@ -167,3 +195,4 @@ class Lesson_type(Base):
 
 
     schedule = relationship('Schedule',back_populates="lesson_type") 
+    rate = relationship('Rate',back_populates="lesson_type")

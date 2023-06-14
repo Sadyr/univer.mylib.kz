@@ -18,6 +18,7 @@ class College_group(Base):
     schedule = relationship('Schedule', back_populates="college_group", lazy='subquery')
     mark = relationship('Mark', back_populates="college_group", lazy='subquery')
     group_teacher_course =relationship ('Group_teacher_course', back_populates="college_group", lazy='subquery')
+    rate = relationship('Rate',back_populates="college_group")
 
 
     
