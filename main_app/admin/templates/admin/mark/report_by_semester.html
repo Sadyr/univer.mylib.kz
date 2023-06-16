@@ -23,7 +23,7 @@
     
     {% for mark in marks %}
     <tr>
-        {% if  mark.teacher_id == group_teacher_course.teacher_course.teacher_id %}
+        {% if  mark.teacher_id == group_teacher_course.teacher_course.teacher_id  and mark.course_id == group_teacher_course.teacher_course.course_id %}
 
         <td> {{mark.control_point.name}}</td>
         <td> {{mark.mark}}</td>
