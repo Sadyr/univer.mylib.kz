@@ -22,8 +22,9 @@ from main_app.models.init_db import init_database,insert_main_data, insert_basic
 def show_marks(student_id, group_id):
     group_teachers_courses = get_group_teachers_courses(group_id)
     marks = get_marks_by_student(student_id)
+    rates=get_rates_by_student(student_id)
     student=get_student(student_id)
-    return render_template('admin/mark/marks.html',student=student, marks=marks, group_teachers_courses=group_teachers_courses, group_id=group_id)
+    return render_template('admin/mark/marks.html',rates=rates, student=student, marks=marks, group_teachers_courses=group_teachers_courses, group_id=group_id)
 
 def get_student(id):
     with g.database  as db:
@@ -131,10 +132,87 @@ def add_object(object):
             db.add(object)
             db.commit()
 
+#def get_rates(student_id, group_id, semester_id, course_id, teacher_id):
+ #   rates = get_marks_by_student(student_id)
 
 
-def update_mark():
-    pass
+def get_rates_by_student(student_id):
+    with g.database  as db:
+        stmt = Select(Rate).filter(Rate.student_id == student_id)
+        try:
+            rates = db.scalars(stmt).all()
+        except NoResultFound:
+            rates = 0
+    return rates
 
-def delete_mark():
-    pass
+@bp.route('/add_rate/<int:student_id>$<int:group_id>$<int:semester_id>$<int:course_id>$<int:teacher_id>', methods=('GET', 'POST'))
+@routes.login_required
+def add_rate(group_id,student_id, semester_id,course_id,teacher_id ):
+    course = get_course(course_id)
+    lesson_types = get_lesson_types()
+    if request.method == 'POST':
+        student_id=student_id
+        college_group_id=group_id
+        course_id=course_id
+        teacher_id=teacher_id
+        semester_id=semester_id
+        rate=request.form['rate']
+        lesson_type_id=request.form['lesson_type_id']
+        datetime=request.form['datetime']
+        visit=request.form['visit']
+        subject=request.form['subject']
+
+
+        rate = Rate(
+            subject=subject,
+            student_id=student_id,college_group_id=college_group_id,
+            course_id=course_id,teacher_id=teacher_id,
+           semester_id=semester_id,
+            rate=rate, lesson_type_id=lesson_type_id, datetime=datetime,visit=visit, 
+        )
+        add_object(rate)
+        return redirect(url_for('admin.show_marks', student_id=student_id, group_id=group_id))
+    else:
+        return render_template('admin/mark/add_rate.html',group_id=group_id,student_id=student_id, semester_id=semester_id,course=course,teacher_id=teacher_id, lesson_types=lesson_types)
+
+
+def get_lesson_types():
+    with g.database  as db:
+        lesson_types = db.query(Lesson_type).all()
+        return lesson_types
+    
+@bp.route('/update_rate/<int:rate_id>$<int:student_id>$<int:group_id>', methods=('GET', 'POST'))
+@routes.login_required
+def update_rate(rate_id, group_id, student_id):
+    if request.method == 'POST':
+        with  g.database as db:
+            rate = db.query(Rate).filter(Rate.id==rate_id).first()
+            rate.rate=request.form['rate']
+            rate.lesson_type_id=request.form['lesson_type_id']
+            rate.datetime=request.form['datetime']
+            rate.visit=request.form['visit']
+            rate.subject=request.form['subject']
+            db.commit()
+            return redirect(url_for('admin.show_marks',group_id=group_id, student_id=student_id ))
+    else:
+        rate = get_rate(rate_id)
+        lesson_types = get_lesson_types()
+        return render_template('admin/mark/update_rate.html',lesson_types=lesson_types ,rate=rate )
+    
+def get_rate(rate_id):
+    with g.database  as db:
+            stmt = Select(Rate).filter(Rate.id == rate_id)
+            try:
+                rate = db.scalars(stmt).one()
+            except NoResultFound:
+                rate = 0
+    return rate
+
+@bp.route('/delete_rate/<int:rate_id>$<int:student_id>$<int:group_id>')
+@routes.login_required
+def delete_rate(rate_id, student_id, group_id):
+    with g.database as db:
+        rate = get_rate(rate_id)
+        db.delete(rate)
+        db.commit()
+    return redirect(url_for('admin.show_marks', student_id=student_id, group_id=group_id))

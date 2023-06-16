@@ -49,9 +49,9 @@ class Teacher_course(Base):
 
     teacher = relationship('Teacher',back_populates="teacher_course", lazy='subquery')
     course = relationship('Course',back_populates="teacher_course", lazy='subquery')
-    schedule = relationship('Schedule',back_populates="teacher_course", lazy='subquery')
-    mark = relationship('Mark',back_populates="teacher_course",lazy='subquery')
-    group_teacher_course =relationship ('Group_teacher_course', back_populates="teacher_course", lazy='subquery')
+    schedule = relationship('Schedule',back_populates="teacher_course")
+    mark = relationship('Mark',back_populates="teacher_course")
+    group_teacher_course =relationship ('Group_teacher_course', back_populates="teacher_course")
 
 
 class Group_teacher_course(Base):
@@ -106,8 +106,9 @@ class Rate(Base):
     semester_id = Column(Integer, ForeignKey('semester.id'))
     lesson_type_id = Column(Integer, ForeignKey('lesson_type.id'))
     datetime=Column(String, nullable=False)
-    subject=Column(Integer, nullable=True)
+    subject=Column(String, nullable=True)
     rate = Column(Integer, nullable=False)
+    visit=Column(String, nullable=False)
 
 
 

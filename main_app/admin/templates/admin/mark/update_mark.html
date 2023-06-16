@@ -8,7 +8,7 @@
             <label for="control_point_id">Тип контроля </label>
             <select id="control_point_id" class="form-control"   name="control_point_id"
             >
-            <option selected value="{{ mark.id }}">{{ mark.control_point.name }}</option>
+            <option selected value="{{ mark.control_point_id }}">{{ mark.control_point.name }}</option>
 
             {% for control_point in control_points %}
               <option value="{{ control_point.id }}">{{ control_point.name }} </option>

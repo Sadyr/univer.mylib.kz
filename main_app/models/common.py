@@ -15,9 +15,9 @@ class College_group(Base):
     student = relationship('Student',back_populates="college_group", lazy='subquery')
     grade = relationship('Grade', back_populates="college_group", lazy='subquery')
     speciality = relationship('Speciality', back_populates="college_group", lazy='subquery')
-    schedule = relationship('Schedule', back_populates="college_group", lazy='subquery')
-    mark = relationship('Mark', back_populates="college_group", lazy='subquery')
-    group_teacher_course =relationship ('Group_teacher_course', back_populates="college_group", lazy='subquery')
+    schedule = relationship('Schedule', back_populates="college_group")
+    mark = relationship('Mark', back_populates="college_group")
+    group_teacher_course =relationship ('Group_teacher_course', back_populates="college_group")
     rate = relationship('Rate',back_populates="college_group")
 
 
@@ -50,7 +50,7 @@ class Grade(Base):
     id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
     name = Column(String, nullable=False, unique=True)
 
-    college_group = relationship('College_group', back_populates="grade", lazy='subquery')
+    college_group = relationship('College_group', back_populates="grade")
 
 
     
@@ -85,8 +85,8 @@ class Faculty(Base):
     name = Column(String,unique=True, nullable=False)
     description = Column(Text, nullable=False)
 
-    speciality = relationship('Speciality', back_populates="faculty", lazy='subquery')
-    department = relationship('Department', back_populates="faculty", lazy='subquery')
+    speciality = relationship('Speciality', back_populates="faculty")
+    department = relationship('Department', back_populates="faculty")
 
 
 

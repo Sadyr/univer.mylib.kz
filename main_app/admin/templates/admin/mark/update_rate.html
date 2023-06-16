@@ -1,0 +1,71 @@
+{% extends 'base_admin.html' %} {% block content %}
+<div class="container">
+    <h1>Редактировать оценку для </h1>
+  
+    <form action="#" method="post" >
+
+        <div class="form-group col-md-6">
+            <label for="datetime">Дата</label>
+            <input
+              type="date"
+              class="form-control"
+              id="datetime"
+              name="datetime"
+              value="{{rate.datetime}}"
+    
+            />
+
+
+    </div>
+     
+        <div class="form-group col-md-4">
+            <label for="lesson_type_id">Тип пары </label>
+            <select id="lesson_type_id" class="form-control"   name="lesson_type_id"
+            >
+            <option selected value="{{ rate.lesson_type_id }}">{{ rate.lesson_type.name }}</option>
+
+            {% for lesson_type in lesson_types %}
+              <option value="{{ lesson_type.id }}">{{ lesson_type.name }} </option>
+                {% endfor %}
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="visit">Посещение пары</label>
+            <select id="lesson_type_id" class="form-control"   name="visit"
+            >
+            <option selected value="{{ rate.visit }}">{{ rate.visit }}</option>
+
+              <option value="Был">Был</option>
+              <option value="Был">Отсутствовал</option>
+
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Тема урока</label>
+            <input
+              type="text"
+              class="form-control"
+              id="subject"
+              name="subject"
+              value="{{rate.subject}}"
+            />
+          </div>
+          <div class="form-group">
+            <label for="rate">Оценка по 100 бальной шкале</label>
+            <input
+              type="text"
+              class="form-control"
+              id="rate"
+              name="rate"
+              value="{{rate.rate}}"
+
+            />
+          </div>
+
+       
+      </div>
+      <button type="submit" class="btn btn-primary">Сохранить</button> 
+    </form>
+
+  {% endblock %}
