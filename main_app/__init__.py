@@ -37,7 +37,7 @@ def create_app(config_class=Config):
     # a simple page that says hello
     @app.route('/')
     def hello():
-        return redirect(url_for('admin.index'))
+        return redirect(url_for('admin.students'))
     return app
 
 
