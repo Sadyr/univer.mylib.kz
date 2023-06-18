@@ -2,4 +2,4 @@ env.sh
 venv/
 1venv/
 __pycache__
-
+git_action.sh
