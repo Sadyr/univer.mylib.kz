@@ -65,6 +65,21 @@ class Group_teacher_course(Base):
     semester = relationship('Semester',back_populates="group_teacher_course", lazy='subquery')
     college_group = relationship('College_group',back_populates="group_teacher_course", lazy='subquery')
 
+class Portfolio(Base):
+    __tablename__ = 'portfolio'
+    id = Column(Integer, primary_key=True, unique=True, autoincrement=True)
+    student_id = Column(Integer, ForeignKey('teacher.id'), nullable=True)
+    teacher_id = Column(Integer, ForeignKey('student.id'), nullable=True)
+    name = Column(String, nullable=False, unique=False)
+    description = Column(Text, nullable=False)
+    field = Column(String, nullable=False, unique=False)
+    resource = Column(String, nullable=False, unique=False)
+    data_of_start = Column(String, nullable=False, unique=False)
+    data_of_end = Column(String, nullable=False, unique=False)
+
+    teacher = relationship('Teacher',back_populates="portfolio")
+    student = relationship('student',back_populates="portfolio")
+
 
 #class Mark(Base):
  #   __tablename__ = 'mark'

@@ -22,6 +22,8 @@ class Teacher(Base):
     department = relationship('Department', back_populates="teacher", lazy='subquery')
     gender = relationship('Gender', back_populates="teacher", lazy='subquery')
     position = relationship('Position', back_populates="teacher", lazy='subquery')
+    portfolio = relationship('Portfolio', back_populates="teacher", lazy='subquery')
+
     teacher_course = relationship('Teacher_course',back_populates="teacher")
     mark = relationship('Mark',back_populates="teacher")
     rate = relationship('Rate',back_populates="teacher")

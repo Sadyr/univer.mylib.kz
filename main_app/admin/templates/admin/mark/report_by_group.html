@@ -1,0 +1,28 @@
+{% extends 'base_admin.html' %} {% block content %}
+
+<div class="container">
+    <h2>Отчет по Группам</h2>
+<h5>Группа: {{group.name}} </h5>
+<h5>Специальность: {{group.speciality.name}}</h5>
+<h5>Курс: {{group.grade.name}}</h5>
+
+
+<table id="myTable">
+    <tr class="header">
+        <th>ФИО Студента</th>
+        <th>Итоговый GPA</th>
+     
+    </tr>
+    {% for student in students %}
+
+    <tr>
+      
+        <td>{{student.firstname}}  {{student.lastname}}</td>
+        <td> {{gpa_by_students_dict[student.id]}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+</main>
+{% endblock %}
+
