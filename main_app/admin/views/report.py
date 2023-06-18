@@ -44,10 +44,6 @@ def get_report_by_semester():
         marks=get_marks_by_semester(student_id, semester_id=semester_id)
         semester = get_semester(semester_id)
         total_mark_by_course,total_gpa_by_course  = total_mark_dict(marks=marks, group_teachers_courses=group_teachers_courses)
-        #total_mark_by_cp = {}
-        #total_mark_by_cp = int(mark_sum(marks)/len(marks))
-        #result_mark = (total_mark_by_cp * course.credit_hours) / course.credit_hours
-        #gpa = get_gpa(result_mark)
         return render_template('admin/mark/report_by_semester.html',total_gpa_by_course=total_gpa_by_course, total_mark_by_course=total_mark_by_course,semester=semester, marks=marks, student=student, group_teachers_courses=group_teachers_courses)
 
 
@@ -167,3 +163,7 @@ def get_gpa(number):
         return 0
 
 
+def get_report_by_group(group_id):
+    pass
+    #student:result_mark: result_gpa
+    # result_mark = course_result_mark

@@ -35,9 +35,9 @@ def create_app(config_class=Config):
     app.register_blueprint(auth_bp)
     
     # a simple page that says hello
-    @app.route('/test')
+    @app.route('/')
     def hello():
-        return render_template('test.html')
+        return redirect(url_for('admin.index'))
     return app
 
 
