@@ -1,0 +1,76 @@
+{% extends 'base_admin.html' %} {% block content %}
+
+<div class="container">
+<h2>Отчет по связке Студент:Семестер</h2>
+
+
+
+<h5> Cтудент: {{ student.firstname + ' '+ student.lastname }} </h5>
+<h5> Группа: {{ student.college_group.name }} </h5>
+
+<h5>Семестер: {{semester.name}}</h5>
+<br>
+<br>
+
+<table id="myTable">
+    <tr class="header">
+        <th>Дисциплина</th>
+        <th>Преподователь</th>
+        <th>Количество кредитов</th>
+        <th>Итоговая оценка</th>
+        <th>GPA</th>
+    </tr>
+    {% for group_teacher_course in group_teachers_courses %}
+    {% for mark in marks %}
+    {% if  mark.teacher_id == group_teacher_course.teacher_course.teacher_id  and mark.course_id == group_teacher_course.teacher_course.course_id %}
+
+
+    <tr>
+        <th> {{group_teacher_course.teacher_course.course.name}}</th>
+        <th> {{group_teacher_course.teacher_course.course.credit_hours}}</th>
+        <th>{{group_teacher_course.teacher_course.teacher.firstname}}  {{group_teacher_course.teacher_course.teacher.lastname}}</th>
+        <th>{{ total_mark_by_course[group_teacher_course.teacher_course.course.name]   }}</th>
+        <th>{{ total_gpa_by_course[group_teacher_course.teacher_course.course.name]   }}</th>
+    </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+
+
+    {% endfor %}
+
+
+{% for group_teacher_course in group_teachers_courses %}
+
+<h5>Преподователь: {{group_teacher_course.teacher_course.teacher.firstname}}  {{group_teacher_course.teacher_course.teacher.lastname}}</h5>
+<h5>Дисциплина: {{group_teacher_course.teacher_course.course.name}}</h5>
+<h5>Количество кредитов: {{group_teacher_course.teacher_course.course.credit_hours}}</h5>
+
+<table id="myTable">
+    <tr class="header">
+        <th>Тип контроля</th>
+        <th>Оценка</th>
+    </tr>
+    
+    {% for mark in marks %}
+    <tr>
+        {% if  mark.teacher_id == group_teacher_course.teacher_course.teacher_id  and mark.course_id == group_teacher_course.teacher_course.course_id %}
+
+        <td> {{mark.control_point.name}}</td>
+        <td> {{mark.mark}}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+<table>
+
+    <h5> Итоговый балл: {{ total_mark_by_course[group_teacher_course.teacher_course.course.name]   }}</h5>
+    <h5> GPA: {{ total_gpa_by_course[group_teacher_course.teacher_course.course.name]   }}</h5>
+
+</table>
+
+
+{% endfor %}
+</div>
+</main>
+{% endblock %}

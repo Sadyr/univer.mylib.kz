@@ -23,16 +23,6 @@ def report():
     semesters = get_semesters()
     return render_template('admin/mark/report.html', students=students, semesters=semesters)
 
-def get_students():
-    with g.database  as db:
-        students = db.query(Student).all()
-    return students
-
-def get_semesters():
-    with g.database  as db:
-        semesters = db.query(Semester).all()
-    return semesters
-
 @bp.route('/get_report_by_semester/', methods=('GET', 'POST'))
 @routes.login_required
 def get_report_by_semester():
@@ -43,33 +33,32 @@ def get_report_by_semester():
         group_teachers_courses = get_courses_by_semester(student.college_group_id, semester_id)
         marks=get_marks_by_semester(student_id, semester_id=semester_id)
         semester = get_semester(semester_id)
-        total_mark_by_course,total_gpa_by_course  = total_mark_dict(marks=marks, group_teachers_courses=group_teachers_courses)
+        total_mark_by_course,total_gpa_by_course  = get_total_marks_by_course(marks=marks, group_teachers_courses=group_teachers_courses)
         return render_template('admin/mark/report_by_semester.html',total_gpa_by_course=total_gpa_by_course, total_mark_by_course=total_mark_by_course,semester=semester, marks=marks, student=student, group_teachers_courses=group_teachers_courses)
 
 
 
-def total_mark_dict(group_teachers_courses, marks):
-    sum = 0
-    course_mark_dict = {}
-    course_gpa_dict = {}
 
-    leng = 0
-    for group_teacher_course in group_teachers_courses:
-        for mark in marks:
-            if group_teacher_course.teacher_course.course_id == mark.course_id:
-                sum=sum+mark.mark
-                leng = leng + 1
-        course_mark_dict[group_teacher_course.teacher_course.course.name] = (int(sum / leng) * group_teacher_course.teacher_course.course.credit_hours) / group_teacher_course.teacher_course.course.credit_hours
-        course_gpa_dict[group_teacher_course.teacher_course.course.name] = get_gpa(int(sum / leng))
-        sum = 0
-        leng=0
-    return (course_mark_dict, course_gpa_dict)
+def get_marks_by_semester(student_id, semester_id):
+    with g.database  as db:
+        stmt = Select(Mark).filter(Mark.student_id == student_id, Mark.semester_id==semester_id)
+        try:
+            marks = db.scalars(stmt).all()
+        except NoResultFound:
+            marks = 0
+    return marks
 
 
 
+def get_students():
+    with g.database  as db:
+        students = db.query(Student).all()
+    return students
 
-
-
+def get_semesters():
+    with g.database  as db:
+        semesters = db.query(Semester).all()
+    return semesters
 
 def  get_courses_by_semester(group_id, semester_id):
     with g.database  as db:
@@ -79,6 +68,30 @@ def  get_courses_by_semester(group_id, semester_id):
         except NoResultFound:
             courses = 0
     return courses
+
+
+def get_total_marks_by_course(group_teachers_courses, marks):
+    sum_marks_of_course = 0
+    course_mark_dict = {}
+    course_gpa_dict = {}
+    count_marks_of_course = 0
+    for group_teacher_course in group_teachers_courses:
+        for mark in marks:
+            if group_teacher_course.teacher_course.course_id == mark.course_id:
+                sum_marks_of_course=sum_marks_of_course+mark.mark
+                count_marks_of_course = count_marks_of_course + 1
+        course_mark_dict[group_teacher_course.teacher_course.course.name] = int(sum_marks_of_course / count_marks_of_course)
+        course_gpa_dict[group_teacher_course.teacher_course.course.name] = get_gpa(int(sum_marks_of_course / count_marks_of_course))
+        sum_marks_of_course = 0
+        count_marks_of_course=0
+    return (course_mark_dict, course_gpa_dict)
+
+
+
+
+
+
+
 
 def get_student(student_id):
     with g.database  as db:
@@ -109,7 +122,6 @@ def get_course(course_id):
 
 
 
-
 def get_mark(mark_id):
     with g.database  as db:
             stmt = Select(Mark).filter(Mark.id == mark_id)
@@ -119,14 +131,7 @@ def get_mark(mark_id):
                 mark = 0
     return mark
 
-def get_marks_by_semester(student_id, semester_id):
-    with g.database  as db:
-        stmt = Select(Mark).filter(Mark.student_id == student_id, Mark.semester_id==semester_id)
-        try:
-            marks = db.scalars(stmt).all()
-        except NoResultFound:
-            marks = 0
-    return marks
+
 
 def get_marks_by_student(student_id):
     with g.database  as db:
@@ -161,9 +166,3 @@ def get_gpa(number):
         return 1
     elif number >= 0 and number <= 49:
         return 0
-
-
-def get_report_by_group(group_id):
-    pass
-    #student:result_mark: result_gpa
-    # result_mark = course_result_mark
