@@ -114,7 +114,7 @@ def get_students_by_group(group_id):
     return students
 
 
-def get_total_gpa_by_semester(courses, course_gpa):
+""" def get_total_gpa_by_semester(courses, course_gpa):
     sum_course = 0
     sum_credits = 0
     for course in courses:
@@ -123,6 +123,27 @@ def get_total_gpa_by_semester(courses, course_gpa):
         sum_course =  sum_course + mult_course
         sum_credits = sum_credits + course.teacher_course.course.credit_hours
     total_mark_by_semester = sum_course / sum_credits
+    return total_mark_by_semester
+ """
+def get_total_gpa_by_semester(courses, course_gpa):
+    sum_course = 0
+    sum_credits = 0
+    
+    for course in courses:
+        course_name = course.teacher_course.course.name
+        
+        if course_name in course_gpa:
+            course_gpa_value = course_gpa[course_name]
+            credit_hours = course.teacher_course.course.credit_hours
+            
+            sum_course += course_gpa_value * credit_hours
+            sum_credits += credit_hours
+    
+    if sum_credits != 0:
+        total_mark_by_semester = sum_course / sum_credits
+    else:
+        total_mark_by_semester = 0
+    
     return total_mark_by_semester
 
     
@@ -182,16 +203,13 @@ def  get_courses_by_semester(group_id, semester_id):
 def get_total_gpa_by_course(group_teachers_courses, marks):
     course_mark_dict = {}
     course_gpa_dict = {}
-    
     for group_teacher_course in group_teachers_courses:
         sum_marks_of_course = 0
         count_marks_of_course = 0
-        
         for mark in marks:
             if mark.course.id == group_teacher_course.teacher_course.course.id:
                 sum_marks_of_course += mark.mark
                 count_marks_of_course += 1
-        
         if count_marks_of_course != 0:
             average_mark = sum_marks_of_course / count_marks_of_course
             course_mark_dict[group_teacher_course.teacher_course.course.name] = int(average_mark)

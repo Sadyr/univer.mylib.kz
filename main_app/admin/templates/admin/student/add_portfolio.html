@@ -1,0 +1,60 @@
+{% extends 'base_admin.html' %} {% block content %}
+<div class="container">
+  <h1>Добавить Научную работу</h1>
+  <h2>Пожалуйста, заполните следующую форму!</h2>
+
+  <form action="#" method="post" >
+
+    <div class="form-group">
+      <label for="name">Название</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        placeholder="Введите название работы ..."
+      />
+    </div>
+    <div class="form-group">
+        <label for="field">Научное Направление</label>
+        <input
+          type="text"
+          class="form-control"
+          id="field"
+          name="field"
+        />
+      </div>
+    <div class="form-group">
+        <label for="description" class="form-label">Описание работы</label>
+        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+      </div>
+
+            <div class="form-group col-md-6">
+              <label for="data_of_start">Дата начала работы</label>
+              <input
+                type="date"
+                class="form-control"
+                id="data_of_start"
+                name="data_of_start"/>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="data_of_end">Дата окончение работы</label>
+        <input
+          type="date"
+          class="form-control"
+          id="data_of_end"
+          name="data_of_end"/>
+</div>
+        <div class="form-group">
+      <label for="resource">Сссылка на документ</label>
+      <input
+        type="text"
+        class="form-control"
+        id="resource"
+        name="resource"
+      />
+   
+    <button type="submit" class="btn btn-primary">Сохранить</button> 
+  </form>
+</div>
+{% endblock %}

@@ -28,7 +28,8 @@ def teachers():
 def show_teacher(teacher_id):
     teacher = get_teacher(teacher_id)
     teacher_courses = get_courses_by_teacher(teacher_id)
-    return render_template('admin/teacher/teacher.html', teacher=teacher, teacher_courses=teacher_courses)
+    portfolios = get_portfolios_by_teacher(teacher_id=teacher_id)
+    return render_template('admin/teacher/teacher.html', teacher=teacher, teacher_courses=teacher_courses, portfolios=portfolios)
 
 
 def get_teachers():
@@ -194,3 +195,70 @@ def get_schedule_by_teacher(teacher_id, semester_id):
             schedule = 0
         return schedule
      
+@bp.route('/add_portfolio/<int:teacher_id>',  methods=('GET', 'POST'))
+@routes.login_required
+def add_portfolio(teacher_id):
+    if request.method == 'POST':
+        teacher_id = teacher_id
+        name = request.form['name']
+        description = request.form['description']
+        field = request.form['field']
+        resource = request.form['resource']
+        data_of_start = request.form['data_of_start']
+        data_of_end = request.form['data_of_end']
+        portfolio = Portfolio (
+           teacher_id=teacher_id,
+             name=name,
+             description=description,field=field,
+             resource=resource, data_of_start=data_of_start,
+            data_of_end=data_of_end)
+        add_object(portfolio)
+        return  redirect(url_for('admin.show_teacher',teacher_id = teacher_id))
+    else:
+        return render_template('admin/teacher/add_portfolio.html',teacher_id=teacher_id)
+
+@bp.route('/update_portfolio/<int:portfolio_id>$<int:teacher_id>',  methods=('GET', 'POST'))
+@routes.login_required
+def update_portfolio(portfolio_id, teacher_id):
+    if request.method == 'POST':
+        with g.database as db:
+            portfolio = db.query(Portfolio).filter(Portfolio.id==portfolio_id).first()
+            portfolio.name = request.form['name']
+            portfolio.description = request.form['description']
+            portfolio.field = request.form['field']
+            portfolio.resource = request.form['resource']
+            portfolio.data_of_start = request.form['data_of_start']
+            portfolio.data_of_end = request.form['data_of_end']
+            db.commit()
+        return redirect(url_for('admin.show_teacher',teacher_id = teacher_id))
+    else:
+        portfolio = get_portfolio(portfolio_id)
+        return render_template('admin/teacher/update_portfolio.html',portfolio=portfolio )
+
+def get_portfolio(portfolio_id):
+    with g.database  as db:
+        stmt = Select(Portfolio).filter(Portfolio.id == portfolio_id)
+        try:
+            portfolio = db.scalars(stmt).one()
+        except NoResultFound:
+            portfolio = 0
+    return portfolio
+
+def get_portfolios_by_teacher(teacher_id):
+    with g.database  as db:
+        stmt = Select(Portfolio).filter(Portfolio.teacher_id == teacher_id)
+        try:
+            portfolio = db.scalars(stmt).all()
+        except NoResultFound:
+            portfolio = 0
+    return portfolio
+
+
+@bp.route('/delete_portfolio/<int:portfolio_id>$<int:teacher_id>')
+@routes.login_required
+def delete_portfolio(portfolio_id, teacher_id):
+    with g.database as db:
+        portfolio = get_portfolio(portfolio_id)
+        db.delete(portfolio)
+        db.commit()
+    return redirect(url_for('admin.show_teacher',teacher_id = teacher_id))

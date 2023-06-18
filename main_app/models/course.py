@@ -77,8 +77,8 @@ class Portfolio(Base):
     data_of_start = Column(String, nullable=False, unique=False)
     data_of_end = Column(String, nullable=False, unique=False)
 
-    teacher = relationship('Teacher',back_populates="portfolio")
-    student = relationship('student',back_populates="portfolio")
+    teacher = relationship('Teacher',back_populates="portfolio",  lazy='subquery')
+    student = relationship('Student',back_populates="portfolio")
 
 
 #class Mark(Base):

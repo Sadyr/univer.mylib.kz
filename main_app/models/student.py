@@ -21,7 +21,7 @@ class Student(Base):
 
     college_group = relationship('College_group',back_populates="student", lazy='subquery')
     gender = relationship('Gender', back_populates="student", lazy='subquery')
-    portfolio = relationship('Portfolio', back_populates="student", lazy='subquery')
+    portfolio = relationship('Portfolio', back_populates="student")
 
     mark = relationship('Mark',back_populates="student")
     rate = relationship('Rate',back_populates="student")

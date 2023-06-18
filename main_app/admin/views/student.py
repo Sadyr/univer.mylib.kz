@@ -9,6 +9,8 @@ from main_app.auth import routes
 from main_app.models.teacher import Teacher
 from main_app.models.student import Student
 from main_app.models.common import *
+from main_app.models.course import *
+
 
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy import and_, Select
@@ -26,7 +28,8 @@ def students():
 @routes.login_required
 def show_student(student_id):
     student = get_student(student_id)
-    return render_template('admin/student/student.html', student=student)
+    portfolios = get_portfolios_by_student(student_id)
+    return render_template('admin/student/student.html', student=student, portfolios=portfolios)
 
 
 @bp.route('/add_student',  methods=('GET', 'POST'))
@@ -124,3 +127,72 @@ def get_genders():
     with g.database  as db:
         genders = db.query(Gender).all()
     return genders
+
+
+@bp.route('/add_portfolio_by_student/<int:student_id>',  methods=('GET', 'POST'))
+@routes.login_required
+def add_portfolio_by_student(student_id):
+    if request.method == 'POST':
+        student_id = student_id
+        name = request.form['name']
+        description = request.form['description']
+        field = request.form['field']
+        resource = request.form['resource']
+        data_of_start = request.form['data_of_start']
+        data_of_end = request.form['data_of_end']
+        portfolio = Portfolio (
+           student_id=student_id,
+             name=name,
+             description=description,field=field,
+             resource=resource, data_of_start=data_of_start,
+            data_of_end=data_of_end)
+        add_object(portfolio)
+        return  redirect(url_for('admin.show_student',student_id = student_id))
+    else:
+        return render_template('admin/student/add_portfolio.html',student_id=student_id)
+
+@bp.route('/update_portfolio_by_student/<int:portfolio_id>$<int:student_id>',  methods=('GET', 'POST'))
+@routes.login_required
+def update_portfolio_by_student(portfolio_id, student_id):
+    if request.method == 'POST':
+        with g.database as db:
+            portfolio = db.query(Portfolio).filter(Portfolio.id==portfolio_id).first()
+            portfolio.name = request.form['name']
+            portfolio.description = request.form['description']
+            portfolio.field = request.form['field']
+            portfolio.resource = request.form['resource']
+            portfolio.data_of_start = request.form['data_of_start']
+            portfolio.data_of_end = request.form['data_of_end']
+            db.commit()
+        return redirect(url_for('admin.show_student',student_id = student_id))
+    else:
+        portfolio = get_portfolio(portfolio_id)
+        return render_template('admin/student/update_portfolio.html',portfolio=portfolio )
+
+def get_portfolio(portfolio_id):
+    with g.database  as db:
+        stmt = Select(Portfolio).filter(Portfolio.id == portfolio_id)
+        try:
+            portfolio = db.scalars(stmt).one()
+        except NoResultFound:
+            portfolio = 0
+    return portfolio
+
+def get_portfolios_by_student(student_id):
+    with g.database  as db:
+        stmt = Select(Portfolio).filter(Portfolio.student_id == student_id)
+        try:
+            portfolio = db.scalars(stmt).all()
+        except NoResultFound:
+            portfolio = 0
+    return portfolio
+
+
+@bp.route('/delete_portfolio_by_student/<int:portfolio_id>$<int:student_id>')
+@routes.login_required
+def delete_portfolio_by_student(portfolio_id, student_id):
+    with g.database as db:
+        portfolio = get_portfolio(portfolio_id)
+        db.delete(portfolio)
+        db.commit()
+    return redirect(url_for('admin.show_student',student_id = student_id))
