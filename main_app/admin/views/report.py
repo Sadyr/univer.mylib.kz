@@ -128,17 +128,14 @@ def get_students_by_group(group_id):
 def get_total_gpa_by_semester(courses, course_gpa):
     sum_course = 0
     sum_credits = 0
-    
     for course in courses:
         course_name = course.teacher_course.course.name
-        
         if course_name in course_gpa:
             course_gpa_value = course_gpa[course_name]
             credit_hours = course.teacher_course.course.credit_hours
             
             sum_course += course_gpa_value * credit_hours
             sum_credits += credit_hours
-    
     if sum_credits != 0:
         total_mark_by_semester = sum_course / sum_credits
     else:
